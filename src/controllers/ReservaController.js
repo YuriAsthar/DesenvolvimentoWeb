@@ -4,7 +4,9 @@ class ReservaController
 {
     async index(req, res) 
     {
-        const reservas = await Reserva.find();
+        const { responsavel } = req.body;
+        
+        let reservas =  await Reserva.find({ responsavel});
 
         return res.json(reservas);
     }
@@ -20,8 +22,19 @@ class ReservaController
 
     async store()
     {
-        let reserva = await Reserva.create(req.body);
+        const { usuario_id, dataInicial, dataFinal, qtdeHospedes } = req.body;
+        const { hotel_id } = req.params;
+
+        let reserva = await Reserva.create({ 
+            responsavel: usuario_id,
+            hotel: hotel_id,
+            dataInicial,
+            dataInicial,
+            qtdeHospedes,
+        });
         
+        await reserva.populate("responsavel").populate("hotel").execPopulate();
+
         return res.json(reserva);
     }
 
