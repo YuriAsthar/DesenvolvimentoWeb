@@ -1,0 +1,4 @@
+$ cat .gitignore
+
+# Ignorar todos os diretórios e arquivos em um diretório.
+node_modules/*
