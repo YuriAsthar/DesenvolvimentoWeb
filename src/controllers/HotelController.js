@@ -5,7 +5,8 @@ class HotelController
     async store(req, res)
     {
         const { usuario_id } = req.headers;
-
+        const arquivo = req.file;
+        
         let hotel = await Hotel.create(req.body);
         
         return res.json(hotel);

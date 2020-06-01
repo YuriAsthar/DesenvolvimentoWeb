@@ -2,8 +2,11 @@ import { Router } from 'express';
 import SessionController from './controllers/SessionController';
 import HotelController from './controllers/HotelController';
 import ReservaController from './controllers/ReservaController';
+import multer from 'multer';
+import uploadConfig from './config/upload';
 
 const routes = new Router();
+const upload = multer(uploadConfig);
 
 routes.get('/', (req, res) => {
     return res.json({responde: true});
@@ -11,7 +14,7 @@ routes.get('/', (req, res) => {
 
 //Hoteis
 routes.get('/hoteis', HotelController.index);
-routes.post('/hoteis', HotelController.store);
+routes.post('/hoteis', upload.single('nomeImagem'), HotelController.store);
 routes.put('/hoteis', HotelController.update);
 routes.delete('/hoteis', HotelController.destroy);
 
